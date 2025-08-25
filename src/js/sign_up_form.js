@@ -43,7 +43,7 @@ export default function createSignUpFormPage() {
           <input type="password" id="confirm-password" class="text-sm bg-[#f1f1f1] rounded border-1 border-[#d7d7d7] mt-1 py-1 px-2 outline-hidden text-gray-700 invalid:border-red-400 invalid:border-2" />
         </div>
         <div class="flex flex-row justify-between items-end mt-10">
-          <div class="text-green-700 font-bold opacity-0" id="success-message">Successfully submitted!</div>
+          <div class="text-green-700 font-bold opacity-0 select-none" id="success-message">Successfully submitted!</div>
           <input type="submit" value="Submit" class="bg-blue-600 text-blue-100 px-6 py-1.5 rounded text-sm h-8"/>
         </div>
       </form>
