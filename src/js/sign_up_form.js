@@ -13,7 +13,7 @@ export default function createSignUpFormPage() {
   signUpFormPage.classList.add("justify-center");
 
   signUpFormPage.innerHTML = /* html */ `
-    <div class="w-[300px] bg-[#ffffff] border-1 border-[#d7d7d7] rounded flex flex-col p-6 m-4">
+    <div class="w-[300px] bg-[#ffffff] border-1 border-[#d7d7d7] rounded flex flex-col p-6 m-4 drop-shadow-xl">
       <div class="text-2xl text-gray-700 font-semibold text-center">Sign Up</div>
       <form novalidate class="mt-4">
         <div class="flex flex-col">
