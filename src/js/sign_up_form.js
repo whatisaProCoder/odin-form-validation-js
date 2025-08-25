@@ -22,7 +22,7 @@ export default function createSignUpFormPage() {
         </div>
         <div class="flex flex-col mt-4">
           <label for="country" class="ml-0.5 text-[0.75rem] font-bold text-gray-800">Country</label>
-          <select id="country" class="text-sm bg-[#f1f1f1] rounded border-1 border-[#d7d7d7] mt-1 py-1 px-2 outline-hidden text-gray-700">
+          <select id="country" class="text-sm bg-[#f1f1f1] rounded border-1 border-[#d7d7d7] mt-1 py-1 px-2 outline-hidden text-gray-700 invalid:border-red-400 invalid:border-2">
             <option value="" hidden>Select your country</option>
             <option value="us">United States</option>
             <option value="cn">China</option>
@@ -99,8 +99,11 @@ function handleCountryPostalCodeValidation() {
 
   if (postalcodeField.value == "") {
     postalcodeField.setCustomValidity("Postal code field empty!");
+  } else if (countryField.value == "") {
+    countryField.setCustomValidity("Country not selected...");
   }
   else {
+    countryField.setCustomValidity("");
     postalcodeField.setCustomValidity("");
     switch (countryField.value) {
       case "us":
