@@ -25,12 +25,9 @@ export default function createSignUpFormPage() {
           <select id="country" class="text-sm bg-[#f1f1f1] rounded border-1 border-[#d7d7d7] mt-1 py-1 px-2 outline-hidden text-gray-700">
             <option value="" hidden>Select your country</option>
             <option value="us">United States</option>
-            <option value="uk">United Kingdom</option>
-            <option value="ca">Canada</option>
-            <option value="fr">France</option>
-            <option value="de">Germany</option>
-            <option value="jp">Japan</option>
+            <option value="cn">China</option>
             <option value="in">India</option>
+            <option value="uae">UAE</option>
          </select>
         </div>
         <div class="flex flex-col mt-4">
@@ -39,14 +36,15 @@ export default function createSignUpFormPage() {
         </div>
         <div class="flex flex-col mt-4">
           <label for="password" class="ml-0.5 text-[0.75rem] font-bold text-gray-800">Password</label>
-          <input type="password" id="confirm-password" class="text-sm bg-[#f1f1f1] rounded border-1 border-[#d7d7d7] mt-1 py-1 px-2 outline-hidden text-gray-700 invalid:border-red-400 invalid:border-2" />
+          <input type="password" id="password" class="text-sm bg-[#f1f1f1] rounded border-1 border-[#d7d7d7] mt-1 py-1 px-2 outline-hidden text-gray-700 invalid:border-red-400 invalid:border-2" />
         </div>
         <div class="flex flex-col mt-4">
           <label for="confirm-password" class="ml-0.5 text-[0.75rem] font-bold text-gray-800">Confirm Password</label>
           <input type="password" id="confirm-password" class="text-sm bg-[#f1f1f1] rounded border-1 border-[#d7d7d7] mt-1 py-1 px-2 outline-hidden text-gray-700 invalid:border-red-400 invalid:border-2" />
         </div>
-        <div class="flex flex-row justify-end mt-10">
-          <input type="submit" value="Submit" class="bg-blue-600 text-blue-200 px-6 py-1.5 rounded text-sm"/>
+        <div class="flex flex-row justify-between items-end mt-10">
+          <div class="text-green-700 font-bold opacity-0" id="success-message">Successfully submitted!</div>
+          <input type="submit" value="Submit" class="bg-blue-600 text-blue-100 px-6 py-1.5 rounded text-sm h-8"/>
         </div>
       </form>
     </div>
@@ -73,6 +71,25 @@ function handleFormValidation() {
 
   const countryField = document.querySelector("#country");
 
+  const postalcodeConstraints = {
+    us: [
+      /^\d{5}(-\d{4})?$/,
+      "Incompatible US Postal Code!"
+    ],
+    cn: [
+      /^[1-9]\d{5}$/,
+      "Incompatible Chinese Postal Code!"
+    ],
+    in: [
+      /^[1-9][0-9]{5}$/,
+      "Incompatible Indian Postal Code!"
+    ],
+    ae: [
+      /^\d{5,6}$/,
+      "Incompatible UAE Postal Code!"
+    ],
+  }
+
   const postalcodeField = document.querySelector("#postalcode");
   postalcodeField.addEventListener("input", () => {
     postalcodeField.setCustomValidity("");
@@ -80,8 +97,62 @@ function handleFormValidation() {
       return;
     }
 
+    switch (countryField.value) {
+      case "us":
+        if (!postalcodeConstraints.us[0].test(postalcodeField.value)) {
+          postalcodeField.setCustomValidity(postalcodeConstraints.us[1]);
+        }
+        break;
+      case "cn":
+        if (!postalcodeConstraints.cn[0].test(postalcodeField.value)) {
+          postalcodeField.setCustomValidity(postalcodeConstraints.cn[1]);
+        }
+        break;
+      case "in":
+        if (!postalcodeConstraints.in[0].test(postalcodeField.value)) {
+          postalcodeField.setCustomValidity(postalcodeConstraints.in[1]);
+        }
+        break;
+      case "ae":
+        if (!postalcodeConstraints.ae[0].test(postalcodeField.value)) {
+          postalcodeField.setCustomValidity(postalcodeConstraints.ae[1]);
+        }
+        break;
+      default:
+        countryField.setCustomValidity("Country not selected.");
+    }
+  });
 
+  const passwordField = document.querySelector("#password");
+  const confirmPasswordField = document.querySelector("#confirm-password");
+
+  passwordField.addEventListener("input", () => {
+    passwordField.setCustomValidity("");
+    if (!passwordField.validity.valid) {
+      return;
+    }
+
+    if (passwordField.value == "") {
+      passwordField.setCustomValidity("Enter password!");
+    } else {
+      passwordField.setCustomValidity("");
+    }
   })
+
+  confirmPasswordField.addEventListener("input", () => {
+    confirmPasswordField.setCustomValidity("");
+    if (!confirmPasswordField.validity.valid) {
+      return;
+    }
+
+    if (!(confirmPasswordField.value.localeCompare(passwordField.value) == 0)) {
+      confirmPasswordField.setCustomValidity("Password doesn't match!");
+    } else {
+      confirmPasswordField.setCustomValidity("");
+    }
+  });
+
+  const successMessage = document.querySelector("#success-message");
 
 
   const form = document.querySelector("form");
@@ -109,7 +180,88 @@ function handleFormValidation() {
     if (!countryField.validity.valid) {
       alert(countryField.validationMessage);
       event.preventDefault();
+      return;
     }
+
+
+
+    if (postalcodeField.value == "") {
+      postalcodeField.setCustomValidity("Postal code field empty!");
+    }
+    else {
+      postalcodeField.setCustomValidity("");
+    }
+
+    if (!postalcodeField.validity.valid) {
+      alert(postalcodeField.validationMessage);
+      event.preventDefault();
+      return;
+    }
+
+    switch (countryField.value) {
+      case "us":
+        if (!postalcodeConstraints.us[0].test(postalcodeField.value)) {
+          postalcodeField.setCustomValidity(postalcodeConstraints.us[1]);
+        }
+        break;
+      case "cn":
+        if (!postalcodeConstraints.cn[0].test(postalcodeField.value)) {
+          postalcodeField.setCustomValidity(postalcodeConstraints.cn[1]);
+        }
+        break;
+      case "in":
+        if (!postalcodeConstraints.in[0].test(postalcodeField.value)) {
+          postalcodeField.setCustomValidity(postalcodeConstraints.in[1]);
+        }
+        break;
+      case "ae":
+        if (!postalcodeConstraints.ae[0].test(postalcodeField.value)) {
+          postalcodeField.setCustomValidity(postalcodeConstraints.ae[1]);
+        }
+        break;
+      default:
+        countryField.setCustomValidity("Country not selected.");
+        postalcodeField.setCustomValidity("Country not selected.");
+    }
+
+    if (!postalcodeField.validity.valid) {
+      alert(postalcodeField.validationMessage);
+      event.preventDefault();
+      return;
+    }
+
+    if (passwordField.value == "") {
+      passwordField.setCustomValidity("Enter password!");
+    } else {
+      passwordField.setCustomValidity("");
+    }
+
+    if (!passwordField.validity.valid) {
+      alert(passwordField.validationMessage);
+      event.preventDefault();
+      return;
+    }
+
+    if (confirmPasswordField.value == "") {
+      confirmPasswordField.setCustomValidity("Confirm password field empty!");
+    }
+    else if (!(confirmPasswordField.value.localeCompare(passwordField.value) == 0)) {
+      confirmPasswordField.setCustomValidity("Password doesn't match!");
+    }
+    else {
+      confirmPasswordField.setCustomValidity("");
+    }
+
+    if (!confirmPasswordField.validity.valid) {
+      alert(confirmPasswordField.validationMessage);
+      event.preventDefault();
+      return;
+    }
+
+    // all validations successful
+    successMessage.classList.remove("opacity-0");
+    event.preventDefault();
   });
+
 
 }
