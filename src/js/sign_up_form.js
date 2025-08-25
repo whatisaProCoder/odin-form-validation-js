@@ -102,32 +102,31 @@ function handleCountryPostalCodeValidation() {
   }
   else {
     postalcodeField.setCustomValidity("");
-  }
-
-  switch (countryField.value) {
-    case "us":
-      if (!postalcodeConstraints.us[0].test(postalcodeField.value)) {
-        postalcodeField.setCustomValidity(postalcodeConstraints.us[1]);
-      }
-      break;
-    case "cn":
-      if (!postalcodeConstraints.cn[0].test(postalcodeField.value)) {
-        postalcodeField.setCustomValidity(postalcodeConstraints.cn[1]);
-      }
-      break;
-    case "in":
-      if (!postalcodeConstraints.in[0].test(postalcodeField.value)) {
-        postalcodeField.setCustomValidity(postalcodeConstraints.in[1]);
-      }
-      break;
-    case "uae":
-      if (!postalcodeConstraints.uae[0].test(postalcodeField.value)) {
-        postalcodeField.setCustomValidity(postalcodeConstraints.uae[1]);
-      }
-      break;
-    default:
-      countryField.setCustomValidity("Country not selected.");
-      postalcodeField.setCustomValidity("Country not selected.");
+    switch (countryField.value) {
+      case "us":
+        if (!postalcodeConstraints.us[0].test(postalcodeField.value)) {
+          postalcodeField.setCustomValidity(postalcodeConstraints.us[1]);
+        }
+        break;
+      case "cn":
+        if (!postalcodeConstraints.cn[0].test(postalcodeField.value)) {
+          postalcodeField.setCustomValidity(postalcodeConstraints.cn[1]);
+        }
+        break;
+      case "in":
+        if (!postalcodeConstraints.in[0].test(postalcodeField.value)) {
+          postalcodeField.setCustomValidity(postalcodeConstraints.in[1]);
+        }
+        break;
+      case "uae":
+        if (!postalcodeConstraints.uae[0].test(postalcodeField.value)) {
+          postalcodeField.setCustomValidity(postalcodeConstraints.uae[1]);
+        }
+        break;
+      default:
+        countryField.setCustomValidity("Country not selected.");
+        postalcodeField.setCustomValidity("Country not selected.");
+    }
   }
 }
 
