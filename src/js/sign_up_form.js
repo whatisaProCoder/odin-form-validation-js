@@ -84,7 +84,7 @@ function handleCountryPostalCodeValidation() {
       /^[1-9][0-9]{5}$/,
       "Incompatible Indian Postal Code!"
     ],
-    ae: [
+    uae: [
       /^\d{5,6}$/,
       "Incompatible UAE Postal Code!"
     ],
@@ -120,9 +120,9 @@ function handleCountryPostalCodeValidation() {
         postalcodeField.setCustomValidity(postalcodeConstraints.in[1]);
       }
       break;
-    case "ae":
-      if (!postalcodeConstraints.ae[0].test(postalcodeField.value)) {
-        postalcodeField.setCustomValidity(postalcodeConstraints.ae[1]);
+    case "uae":
+      if (!postalcodeConstraints.uae[0].test(postalcodeField.value)) {
+        postalcodeField.setCustomValidity(postalcodeConstraints.uae[1]);
       }
       break;
     default:
@@ -148,6 +148,8 @@ function handlePasswordValidation() {
 function handleConfirmPasswordValidation() {
   const passwordField = document.querySelector("#password");
   const confirmPasswordField = document.querySelector("#confirm-password");
+
+  confirmPasswordField.setCustomValidity("");
   if (!confirmPasswordField.validity.valid) {
     return;
   }
