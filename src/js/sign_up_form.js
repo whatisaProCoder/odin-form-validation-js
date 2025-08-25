@@ -175,6 +175,9 @@ function handleFormValidation() {
   });
 
   const countryField = document.querySelector("#country");
+  countryField.addEventListener("change", () => {
+    handleCountryPostalCodeValidation();
+  });
 
   const postalcodeField = document.querySelector("#postalcode");
   postalcodeField.addEventListener("input", () => {
