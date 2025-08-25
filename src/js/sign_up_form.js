@@ -238,6 +238,4 @@ function handleFormValidation() {
     successMessage.classList.remove("opacity-0");
     event.preventDefault();
   });
-
-
 }
