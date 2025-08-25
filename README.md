@@ -1,4 +1,6 @@
-# JavaScript Form Validation - Odin Project Exercise
+# JavaScript Form Validation - Odin Project Exerci## 🔍 Key Code Components
+
+The validation is implemented through several functions:
 
 This project implements a form validation exercise from [The Odin Project's JavaScript curriculum](https://www.theodinproject.com/lessons/node-path-javascript-form-validation-with-javascript). It demonstrates how to use JavaScript's Constraint Validation API to create custom form validation without relying on default browser behaviors.
 
@@ -16,7 +18,7 @@ The assignment required building a browser form with:
 ## 🚀 Implementation Highlights
 
 - **JavaScript Constraint Validation API**: Used `setCustomValidity()` to implement custom validation rules
-- **Real-time Validation**: Fields are validated as users type via `input` event listeners
+- **Real-time Validation**: Fields are validated as users type via `input` event listeners and dropdown changes via `change` event listeners
 - **Custom Validation Logic**:
   - Email must end with "@mygov.co.in" domain
   - Country-specific postal code validation using regex patterns
@@ -77,6 +79,8 @@ This exercise demonstrates:
 - **Event handling**: For real-time validation and form submission
 - **Regular expressions**: For postal code format validation
 - **CSS classes**: For styling invalid fields (using TailwindCSS)
+- **Conditional validation**: Implementing validation logic that depends on other field values
+- **Alert messages**: Providing clear error feedback to users
 
 ---
 
