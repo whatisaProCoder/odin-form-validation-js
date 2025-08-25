@@ -56,19 +56,19 @@ export default function createSignUpFormPage() {
   handleFormValidation();
 }
 
-function handleFormValidation() {
+function handleEmailValidation() {
   const emailField = document.querySelector("#email");
-  emailField.addEventListener("input", () => {
-    emailField.setCustomValidity("");
-    if (!emailField.validity.valid) {
-      return;
-    }
+  emailField.setCustomValidity("");
+  if (!emailField.validity.valid) {
+    return;
+  }
 
-    if (!emailField.value.endsWith("@mygov.co.in")) {
-      emailField.setCustomValidity("Enter only mygov-email address...");
-    }
-  });
+  if (!emailField.value.endsWith("@mygov.co.in")) {
+    emailField.setCustomValidity("Enter only mygov-email address...");
+  }
+}
 
+function handleCountryPostalCodeValidation() {
   const countryField = document.querySelector("#country");
 
   const postalcodeConstraints = {
@@ -91,65 +91,100 @@ function handleFormValidation() {
   }
 
   const postalcodeField = document.querySelector("#postalcode");
-  postalcodeField.addEventListener("input", () => {
-    postalcodeField.setCustomValidity("");
-    if (!postalcodeField.validity.valid) {
-      return;
-    }
 
-    switch (countryField.value) {
-      case "us":
-        if (!postalcodeConstraints.us[0].test(postalcodeField.value)) {
-          postalcodeField.setCustomValidity(postalcodeConstraints.us[1]);
-        }
-        break;
-      case "cn":
-        if (!postalcodeConstraints.cn[0].test(postalcodeField.value)) {
-          postalcodeField.setCustomValidity(postalcodeConstraints.cn[1]);
-        }
-        break;
-      case "in":
-        if (!postalcodeConstraints.in[0].test(postalcodeField.value)) {
-          postalcodeField.setCustomValidity(postalcodeConstraints.in[1]);
-        }
-        break;
-      case "ae":
-        if (!postalcodeConstraints.ae[0].test(postalcodeField.value)) {
-          postalcodeField.setCustomValidity(postalcodeConstraints.ae[1]);
-        }
-        break;
-      default:
-        countryField.setCustomValidity("Country not selected.");
-    }
+  postalcodeField.setCustomValidity("");
+  if (!postalcodeField.validity.valid) {
+    return;
+  }
+
+  if (postalcodeField.value == "") {
+    postalcodeField.setCustomValidity("Postal code field empty!");
+  }
+  else {
+    postalcodeField.setCustomValidity("");
+  }
+
+  switch (countryField.value) {
+    case "us":
+      if (!postalcodeConstraints.us[0].test(postalcodeField.value)) {
+        postalcodeField.setCustomValidity(postalcodeConstraints.us[1]);
+      }
+      break;
+    case "cn":
+      if (!postalcodeConstraints.cn[0].test(postalcodeField.value)) {
+        postalcodeField.setCustomValidity(postalcodeConstraints.cn[1]);
+      }
+      break;
+    case "in":
+      if (!postalcodeConstraints.in[0].test(postalcodeField.value)) {
+        postalcodeField.setCustomValidity(postalcodeConstraints.in[1]);
+      }
+      break;
+    case "ae":
+      if (!postalcodeConstraints.ae[0].test(postalcodeField.value)) {
+        postalcodeField.setCustomValidity(postalcodeConstraints.ae[1]);
+      }
+      break;
+    default:
+      countryField.setCustomValidity("Country not selected.");
+      postalcodeField.setCustomValidity("Country not selected.");
+  }
+}
+
+function handlePasswordValidation() {
+  const passwordField = document.querySelector("#password");
+  passwordField.setCustomValidity("");
+  if (!passwordField.validity.valid) {
+    return;
+  }
+
+  if (passwordField.value == "") {
+    passwordField.setCustomValidity("Enter password!");
+  } else {
+    passwordField.setCustomValidity("");
+  }
+}
+
+function handleConfirmPasswordValidation() {
+  const passwordField = document.querySelector("#password");
+  const confirmPasswordField = document.querySelector("#confirm-password");
+  if (!confirmPasswordField.validity.valid) {
+    return;
+  }
+
+  if (confirmPasswordField.value == "") {
+    confirmPasswordField.setCustomValidity("Confirm password field empty!");
+  }
+  else if (!(confirmPasswordField.value.localeCompare(passwordField.value) == 0)) {
+    confirmPasswordField.setCustomValidity("Password doesn't match!");
+  }
+  else {
+    confirmPasswordField.setCustomValidity("");
+  }
+}
+
+function handleFormValidation() {
+  const emailField = document.querySelector("#email");
+  emailField.addEventListener("input", () => {
+    handleEmailValidation();
+  });
+
+  const countryField = document.querySelector("#country");
+
+  const postalcodeField = document.querySelector("#postalcode");
+  postalcodeField.addEventListener("input", () => {
+    handleCountryPostalCodeValidation();
   });
 
   const passwordField = document.querySelector("#password");
   const confirmPasswordField = document.querySelector("#confirm-password");
 
   passwordField.addEventListener("input", () => {
-    passwordField.setCustomValidity("");
-    if (!passwordField.validity.valid) {
-      return;
-    }
-
-    if (passwordField.value == "") {
-      passwordField.setCustomValidity("Enter password!");
-    } else {
-      passwordField.setCustomValidity("");
-    }
+    handlePasswordValidation();
   })
 
   confirmPasswordField.addEventListener("input", () => {
-    confirmPasswordField.setCustomValidity("");
-    if (!confirmPasswordField.validity.valid) {
-      return;
-    }
-
-    if (!(confirmPasswordField.value.localeCompare(passwordField.value) == 0)) {
-      confirmPasswordField.setCustomValidity("Password doesn't match!");
-    } else {
-      confirmPasswordField.setCustomValidity("");
-    }
+    handleConfirmPasswordValidation();
   });
 
   const successMessage = document.querySelector("#success-message");
@@ -158,11 +193,7 @@ function handleFormValidation() {
   const form = document.querySelector("form");
   form.addEventListener("submit", (event) => {
 
-    if (!emailField.value.endsWith("@mygov.co.in")) {
-      emailField.setCustomValidity("Enter only mygov-email address...");
-    } else {
-      emailField.setCustomValidity("");
-    }
+    handleEmailValidation();
 
     if (!emailField.validity.valid) {
       alert(emailField.validationMessage);
@@ -171,11 +202,7 @@ function handleFormValidation() {
     }
 
 
-    if (countryField.value == "") {
-      countryField.setCustomValidity("Select a country...");
-    } else {
-      countryField.setCustomValidity("");
-    }
+    handleCountryPostalCodeValidation();
 
     if (!countryField.validity.valid) {
       alert(countryField.validationMessage);
@@ -183,58 +210,13 @@ function handleFormValidation() {
       return;
     }
 
-
-
-    if (postalcodeField.value == "") {
-      postalcodeField.setCustomValidity("Postal code field empty!");
-    }
-    else {
-      postalcodeField.setCustomValidity("");
-    }
-
     if (!postalcodeField.validity.valid) {
       alert(postalcodeField.validationMessage);
       event.preventDefault();
       return;
     }
 
-    switch (countryField.value) {
-      case "us":
-        if (!postalcodeConstraints.us[0].test(postalcodeField.value)) {
-          postalcodeField.setCustomValidity(postalcodeConstraints.us[1]);
-        }
-        break;
-      case "cn":
-        if (!postalcodeConstraints.cn[0].test(postalcodeField.value)) {
-          postalcodeField.setCustomValidity(postalcodeConstraints.cn[1]);
-        }
-        break;
-      case "in":
-        if (!postalcodeConstraints.in[0].test(postalcodeField.value)) {
-          postalcodeField.setCustomValidity(postalcodeConstraints.in[1]);
-        }
-        break;
-      case "ae":
-        if (!postalcodeConstraints.ae[0].test(postalcodeField.value)) {
-          postalcodeField.setCustomValidity(postalcodeConstraints.ae[1]);
-        }
-        break;
-      default:
-        countryField.setCustomValidity("Country not selected.");
-        postalcodeField.setCustomValidity("Country not selected.");
-    }
-
-    if (!postalcodeField.validity.valid) {
-      alert(postalcodeField.validationMessage);
-      event.preventDefault();
-      return;
-    }
-
-    if (passwordField.value == "") {
-      passwordField.setCustomValidity("Enter password!");
-    } else {
-      passwordField.setCustomValidity("");
-    }
+    handlePasswordValidation();
 
     if (!passwordField.validity.valid) {
       alert(passwordField.validationMessage);
@@ -242,15 +224,7 @@ function handleFormValidation() {
       return;
     }
 
-    if (confirmPasswordField.value == "") {
-      confirmPasswordField.setCustomValidity("Confirm password field empty!");
-    }
-    else if (!(confirmPasswordField.value.localeCompare(passwordField.value) == 0)) {
-      confirmPasswordField.setCustomValidity("Password doesn't match!");
-    }
-    else {
-      confirmPasswordField.setCustomValidity("");
-    }
+    handleConfirmPasswordValidation();
 
     if (!confirmPasswordField.validity.valid) {
       alert(confirmPasswordField.validationMessage);
