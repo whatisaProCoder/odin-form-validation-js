@@ -97,12 +97,13 @@ function handleCountryPostalCodeValidation() {
     return;
   }
 
-  if (postalcodeField.value == "") {
-    postalcodeField.setCustomValidity("Postal code field empty!");
-  } else if (countryField.value == "") {
+  if (countryField.value == "") {
     countryField.setCustomValidity("Country not selected...");
   }
-  else {
+  else if (postalcodeField.value == "") {
+    countryField.setCustomValidity("");
+    postalcodeField.setCustomValidity("Postal code field empty!");
+  } else {
     countryField.setCustomValidity("");
     postalcodeField.setCustomValidity("");
     switch (countryField.value) {
