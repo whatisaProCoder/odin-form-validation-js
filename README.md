@@ -1,8 +1,8 @@
-# JavaScript Form Validation - Odin Project Exerci## 🔍 Key Code Components
-
-The validation is implemented through several functions:
+# JavaScript Form Validation - Odin Project Exercise
 
 This project implements a form validation exercise from [The Odin Project's JavaScript curriculum](https://www.theodinproject.com/lessons/node-path-javascript-form-validation-with-javascript). It demonstrates how to use JavaScript's Constraint Validation API to create custom form validation without relying on default browser behaviors.
+
+👉 **[View Live Demo](https://whatisaprocoder.github.io/odin-form-validation-js/)**
 
 ## 📋 Exercise Overview
 
